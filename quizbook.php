@@ -16,3 +16,6 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/postypes.php';
 
 /* Regenera las reglas de las url al activar plugin */
 register_activation_hook(__FILE__, 'quizbook_rewrite_flush');
+
+/* Añade el Metaboxes a los quizes */
+require_once plugin_dir_path( __FILE__ ) . 'includes/metaboxes.php';
