@@ -19,10 +19,10 @@ add_action('add_meta_boxes', 'quizbook_agregar_metaboxes');
 
 /* Muestra el contenido del HTML de los metaboxes */
 function quizbook_metaboxes($post) {
+    wp_nonce_field(basename(__FILE__), 'quizbook_nonce');
 
-  wp_nonce_field( basename(__FILE__), 'quizbook_nonce' ); // Nonce de seguridad
+    ?>
 
-  ?>
    <table class="form-table">
        <tr>
            <th class="row-title" colspan="2">
@@ -42,7 +42,7 @@ function quizbook_metaboxes($post) {
                <label for="respuesta_b">b)</label>
            </th>
            <td>
-               <input value="<?php echo  esc_attr( get_post_meta( $post->ID, 'qb_respuesta_b', true) ); ?>" id="respuesta_b" name="qb_respuesta_b" class="regular-text" type="text">
+               <input value="<?php echo esc_attr( get_post_meta( $post->ID, 'qb_respuesta_b', true) ); ?>" id="respuesta_b" name="qb_respuesta_b" class="regular-text" type="text">
            </td>
        </tr>
        <tr>
@@ -50,7 +50,7 @@ function quizbook_metaboxes($post) {
                <label id="respuesta_c">c)</label>
            </th>
            <td>
-               <input value="<?php echo  esc_attr( get_post_meta( $post->ID, 'qb_respuesta_c', true ) ); ?>" id="respuesta_c" name="qb_respuesta_c" class="regular-text" type="text">
+               <input value="<?php echo esc_attr( get_post_meta( $post->ID, 'qb_respuesta_c', true ) ); ?>" id="respuesta_c" name="qb_respuesta_c" class="regular-text" type="text">
            </td>
        </tr>
        <tr>
@@ -58,7 +58,7 @@ function quizbook_metaboxes($post) {
                <label id="respuesta_d">d)</label>
            </th>
            <td>
-               <input value="<?php echo  esc_attr( get_post_meta( $post->ID, 'qb_respuesta_d', true) );  ?>" id="respuesta_d" name="qb_respuesta_d" class="regular-text" type="text">
+               <input value="<?php echo esc_attr( get_post_meta( $post->ID, 'qb_respuesta_d', true) );  ?>" id="respuesta_d" name="qb_respuesta_d" class="regular-text" type="text">
            </td>
        </tr>
        <tr>
@@ -66,7 +66,7 @@ function quizbook_metaboxes($post) {
                <label id="respuesta_e">e)</label>
            </th>
            <td>
-               <input value="<?php echo  esc_attr( get_post_meta( $post->ID, 'qb_respuesta_e', true) ); ?>" id="respuesta_e" name="qb_respuesta_e" class="regular-text" type="text">
+               <input value="<?php echo esc_attr( get_post_meta( $post->ID, 'qb_respuesta_e', true) ); ?>" id="respuesta_e" name="qb_respuesta_e" class="regular-text" type="text">
            </td>
        </tr>
        <tr>
@@ -74,7 +74,7 @@ function quizbook_metaboxes($post) {
                <label for="respuesta_correcta">Respuesta Correcta</label>
            </th>
            <td>
-             <?php $respuesta =  esc_html( get_post_meta ($post->ID, 'quizbook_correcta', true) ); ?>
+             <?php $respuesta = esc_attr( get_post_meta($post->ID, 'quizbook_correcta', true) ); ?>
                <select name="quizbook_correcta" id="respuesta_correcta" class="postbox">
                    <option value="">Elige la respuesta correcta</option>
                    <option <?php selected($respuesta, 'qb_correcta:a'); ?> value="qb_correcta:a">a</option>
@@ -93,24 +93,21 @@ function quizbook_metaboxes($post) {
 /* Guarda la Info de los Metaboxes */
 function quizbook_guardar_metaboxes($post_id, $post, $update) {
 
-    if (!iseet ($_POST['quizbook_nonce']) || !wp_verify_nonce ($_POST['quizbook_nonce'], basename($__FILE__) ) ){ // verifica el nonce creado arriba
-      return $post_id;
-    }
+    if(!isset($_POST['quizbook_nonce']) || !wp_verify_nonce( $_POST['quizbook_nonce'], basename(__FILE__)  ) ) // verifica el nonce creado arriba
+    return $post_id;
 
-    if(current_user_can ('edit_post', $post_id) ) { // verifica permisos de edicion
-      return $post_id;
-    }
+    if(!current_user_can('edit_post', $post_id)) // verifica permisos de edicion
+    return $post_id;
 
-    if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE){
-      return $post_id;
-    }
+    if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE)
+    return $post_id;
 
-     $respuesta_a = $respuesta_b = $respuesta_c = $respuesta_d = $respuesta_e = $correcta = '';
+     $respuesta_a = $respuesta_b = $respuesta_c = $respuesta_d = $respuesta_e = '';
 
      if(isset( $_POST['qb_respuesta_a'] ) ) {
        $respuesta_a = sanitize_text_field($_POST['qb_respuesta_a']);
      }
-     update_post_meta($post_id, 'qb_respuesta_a', $respuesta_a ); // inserta en la BD los datos del form
+     update_post_meta($post_id, 'qb_respuesta_a', $respuesta_a );
 
      if(isset($_POST['qb_respuesta_b'])) {
        $respuesta_b = sanitize_text_field($_POST['qb_respuesta_b']);
@@ -137,4 +134,4 @@ function quizbook_guardar_metaboxes($post_id, $post, $update) {
      }
      update_post_meta($post_id, 'quizbook_correcta', $correcta );
 }
-add_action('save_post', 'quizbook_guardar_metaboxes', 10, 3); // prioridad y "3" es la cantidad de argumentos en la función
+add_action('save_post', 'quizbook_guardar_metaboxes', 10, 3);
