@@ -18,7 +18,11 @@ add_action('add_meta_boxes', 'quizbook_agregar_metaboxes');
 
 
 /* Muestra el contenido del HTML de los metaboxes */
-function quizbook_metaboxes($post) { ?>
+function quizbook_metaboxes($post) {
+
+  wp_nonce_field( basename(__FILE__), 'quizbook_nonce' ); // Nonce de seguridad
+
+  ?>
    <table class="form-table">
        <tr>
            <th class="row-title" colspan="2">
@@ -88,6 +92,18 @@ function quizbook_metaboxes($post) { ?>
 
 /* Guarda la Info de los Metaboxes */
 function quizbook_guardar_metaboxes($post_id, $post, $update) {
+
+    if (!iseet ($_POST['quizbook_nonce']) || !wp_verify_nonce ($_POST['quizbook_nonce'], basename($__FILE__) ) ){ // verifica el nonce creado arriba
+      return $post_id;
+    }
+
+    if(current_user_can ('edit_post', $post_id) ) { // verifica permisos de edicion
+      return $post_id;
+    }
+
+    if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE){
+      return $post_id;
+    }
 
      $respuesta_a = $respuesta_b = $respuesta_c = $respuesta_d = $respuesta_e = $correcta = '';
 
