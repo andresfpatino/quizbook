@@ -37,13 +37,14 @@ function quizbook_post_type() {
         'show_ui'            => true,
         'show_in_menu'       => true,
         'query_var'          => true,
-        'rewrite'            => array( 'slug' => 'quizes' ),
-        'capability_type'    => 'post',
+        'rewrite'            => array('slug' => 'quizes'),
+        'capability_type'    => array('quiz', 'quizes'),
         'menu_position'      => 6, // Aumenta de 5 en 5
         'menu_icon'          => 'dashicons-welcome-learn-more',
         'has_archive'        => false,
         'hierarchical'       => false,
         'supports'           => array( 'title', 'editor'),
+        'map_meta_cap'       => true
     );
 
     register_post_type( 'quizes', $args );
