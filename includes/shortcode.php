@@ -42,4 +42,4 @@ function quizbook_shortcode($atts){
     </div>
   </form> <?php
 }
-add_shortcode( 'quizbook', quizbook_shortcode );
+add_shortcode( 'quizbook', 'quizbook_shortcode' );
