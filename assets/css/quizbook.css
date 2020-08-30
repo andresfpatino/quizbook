@@ -1,12 +1,17 @@
 .quizbook__questions {
    list-style: none;
    padding-left: 0;
+   display: flex;
+   width: 100%;
+   flex-wrap: wrap;
+   justify-content: space-between;
 }
 
 .quizbook__question{
   background-color: #f1f1f1;
   padding: 20px 25px;
   margin-bottom: 25px;
+  width: 49%;
 }
 
 .quizbook__question__title{
@@ -20,6 +25,7 @@
 .quizbook__question__title,
 .quizbook__question__description {
   text-align: center;
+  line-height: 1em;
 }
 
 .quizbook__question__title::before {
@@ -33,8 +39,25 @@
   cursor: pointer;
 }
 
-.quizbook__question--answer:hover {
+.quizbook__question--answer:hover,
+.quizbook__question--answer.selected {
   background-color: #0073aa;
   color: #fff;
   border-color: #fff;
+}
+
+.aprobado {
+  display: inline-block;
+  background-color: #08ab08;
+  min-width: 300px;
+  text-align: center;
+  color: #fff;
+}
+
+.noaprobado {
+  display: inline-block;
+  background-color: #da0606;
+  min-width: 300px;
+  text-align: center;
+  color: #fff;
 }

@@ -36,3 +36,6 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/functions.php';
 
 /* Estilos */
 require_once plugin_dir_path( __FILE__ ) . 'includes/scripts.php';
+
+/* Resultados del examen */
+require_once plugin_dir_path( __FILE__ ) . 'includes/resultados.php';

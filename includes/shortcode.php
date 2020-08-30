@@ -38,6 +38,11 @@ function quizbook_shortcode($atts){
         <?php endwhile; wp_reset_postdata(); ?>
       </ul>
     </div>
+
+    <input type="submit" value="Enviar" id="quizbook_submit">
+
+    <div id="quizbook_resultado"></div>
+
   </form> <?php
 }
 add_shortcode( 'quizbook', 'quizbook_shortcode' );
